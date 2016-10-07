@@ -102,6 +102,7 @@ public class Bank {
             System.out.println("1. Deposit");
             System.out.println("2. Withdraw");
             System.out.println("3. Transfer");
+            System.out.println("4. Create a new account");
             System.out.println("0. Back to main menu");
 
             int menuChoice = Integer.valueOf(userInput.nextLine());
@@ -116,9 +117,15 @@ public class Bank {
                 activeAccount.withdraw(withdrawalAmount);
             } else if (menuChoice == 3) {
                 myAccount.transfer(userInput, thisCustomer, activeAccount);
+            } else if (menuChoice == 4) {
+                newAccountMenu(userInput, thisCustomer, myBank, myAccount);
             } else if (menuChoice == 0) {
                 myRunner.mainMenu(myBank, thisCustomer, myRunner, myAccount);
             }
         }
     }
+
+//    public double getTotalinDeposits() {
+//
+//    }
 }
