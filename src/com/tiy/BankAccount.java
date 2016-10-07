@@ -41,12 +41,6 @@ public class BankAccount {
         this.accountName = accountName;
     }
 
-    public void printInfo() {
-        System.out.println("Your " + accountName + " account " + balance + " is $" + balance + ".");
-        System.out.println("Your account was opened " + accountCreation.format(localFormat));
-        System.out.println("Your last transaction was " + lastTransaction.format(localFormat));
-    }
-
     public double deposit(double depositAmount) {
         lastTransaction = LocalDateTime.now();
         balance += (depositAmount);
