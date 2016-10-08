@@ -16,6 +16,7 @@ public class BankAccount {
     DateTimeFormatter localFormat = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM);
     private long sleepTimeout = 0;
     private double interestRate = 1;
+    private int type;
 
     public BankAccount() {
     }
@@ -39,6 +40,14 @@ public class BankAccount {
 
     public void setAccountName(String accountName) {
         this.accountName = accountName;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 
     public double deposit(double depositAmount) {

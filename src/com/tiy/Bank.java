@@ -9,7 +9,6 @@ import java.util.Scanner;
 public class Bank {
     String bankName = "DonaldBank";
     ArrayList<Customer> customerList = new ArrayList<>();
-//    BankAccount myBankAccount = new BankAccount();
 
 
     public Bank() {
@@ -41,6 +40,7 @@ public class Bank {
             System.out.println("1. Checking account");
             System.out.println("2. Savings account");
             System.out.println("3. Retirement account");
+            System.out.println("4. View my accounts");
             System.out.println("0. Back to main menu");
 
             int menuChoice = Integer.valueOf(userInput.nextLine());
@@ -50,28 +50,30 @@ public class Bank {
                 String checkingAccountName = userInput.nextLine();
                 System.out.println("How much would you like to place in the account?");
                 double initialBalance = Double.valueOf(userInput.nextLine());
-                thisCustomer.customerAccounts.add(new BankAccount(checkingAccountName, initialBalance));
+                thisCustomer.customerAccounts.add(new CheckingAccount(checkingAccountName, initialBalance, 1));
                 for (BankAccount accounts : thisCustomer.customerAccounts) {
-                    System.out.println(thisCustomer.getUserName() + " " + accounts.getAccountName() + " " + accounts.balance + " " + accounts.getBalance());
+                    System.out.println(thisCustomer.getUserName() + " " + accounts.getAccountName() + " " + accounts.balance);
                 }
             } else if (menuChoice == 2) {
                 System.out.println("What would you like to call this account?");
                 String savingsAccountName = userInput.nextLine();
                 System.out.println("How much would you like to place in the account?");
                 double initialBalance = Double.valueOf(userInput.nextLine());
-                thisCustomer.customerAccounts.add(new BankAccount(savingsAccountName, initialBalance));
+                thisCustomer.customerAccounts.add(new SavingsAccount(savingsAccountName, initialBalance, 2));
                 for (BankAccount accounts : thisCustomer.customerAccounts) {
-                    System.out.println(thisCustomer.getUserName() + " " + accounts.getAccountName() + " " + accounts.balance + " " + accounts.getBalance());
+                    System.out.println(thisCustomer.getUserName() + " " + accounts.getAccountName() + " " + accounts.balance);
                 }
             } else if (menuChoice == 3) {
                 System.out.println("What would you like to call this account?");
                 String retirementAccountName = userInput.nextLine();
                 System.out.println("How much would you like to place in the account?");
                 double initialBalance = Double.valueOf(userInput.nextLine());
-                thisCustomer.customerAccounts.add(new BankAccount(retirementAccountName, initialBalance));
+                thisCustomer.customerAccounts.add(new RetirementAccount(retirementAccountName, initialBalance, 3));
                 for (BankAccount accounts : thisCustomer.customerAccounts) {
-                    System.out.println(thisCustomer.getUserName() + " " + accounts.getAccountName() + " " + accounts.balance + " " + accounts.getBalance());
+                    System.out.println(thisCustomer.getUserName() + " " + accounts.getAccountName() + " " + accounts.balance);
                 }
+            } else if (menuChoice == 4) {
+                transactionMenu(userInput, thisCustomer, myBank, myRunner, myAccount);
             } else if (menuChoice == 0) {
                 myRunner.mainMenu(myBank, thisCustomer, myRunner, myAccount);
             } else {
@@ -87,14 +89,14 @@ public class Bank {
 
         int index = 1;
         for (BankAccount accounts : thisCustomer.customerAccounts) {
-            System.out.println(index + ": " + thisCustomer.getUserName() + " " + accounts.getAccountName() + " " + accounts.balance + " " + accounts.getBalance());
+            System.out.println(index + ": " + thisCustomer.getUserName() + " " + accounts.getAccountName() + " " + accounts.balance);
             index++;
         }
 
         int accountChoice = Integer.valueOf(userInput.nextLine());
 
         BankAccount activeAccount = thisCustomer.getCustomerAccounts().get(accountChoice -1);
-        System.out.println(activeAccount.getAccountName());
+        System.out.println(activeAccount.getAccountName() + " " + activeAccount.getBalance());
 
         System.out.println("What would you like to do?");
 
@@ -103,6 +105,7 @@ public class Bank {
             System.out.println("2. Withdraw");
             System.out.println("3. Transfer");
             System.out.println("4. Create a new account");
+            System.out.println("5. Back to transaction menu");
             System.out.println("0. Back to main menu");
 
             int menuChoice = Integer.valueOf(userInput.nextLine());
@@ -119,6 +122,8 @@ public class Bank {
                 myAccount.transfer(userInput, thisCustomer, activeAccount);
             } else if (menuChoice == 4) {
                 newAccountMenu(userInput, thisCustomer, myBank, myAccount);
+            } else if (menuChoice == 5) {
+                transactionMenu(userInput, thisCustomer, myBank, myRunner, myAccount);
             } else if (menuChoice == 0) {
                 myRunner.mainMenu(myBank, thisCustomer, myRunner, myAccount);
             }
