@@ -1,9 +1,0 @@
-account.name= danackg
-account.balance= 70.0
-account.type=1
-account.name= danasvg
-account.balance= 57.88125
-account.type=2
-account.name= danartr
-account.balance= 35.00000000000001
-account.type=3

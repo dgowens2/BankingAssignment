@@ -14,6 +14,15 @@ public class Bank {
     public Bank() {
     }
 
+    public Customer getCustomer(String name) {
+        for (Customer customer : customerList) {
+            if (customer.getUserName().equalsIgnoreCase(name)) {
+                return customer;
+            }
+        }
+        return null;
+    }
+
     public String getBankName() {
         return bankName;
     }
@@ -75,7 +84,7 @@ public class Bank {
             } else if (menuChoice == 4) {
                 transactionMenu(userInput, thisCustomer, myBank, myRunner, myAccount);
             } else if (menuChoice == 0) {
-                myRunner.mainMenu(myBank, thisCustomer, myRunner, myAccount);
+                break;
             } else {
                 System.out.println("Invalid selection. Please try again");
                 newAccountMenu(userInput, thisCustomer, myBank, myAccount);
@@ -121,16 +130,12 @@ public class Bank {
             } else if (menuChoice == 3) {
                 myAccount.transfer(userInput, thisCustomer, activeAccount);
             } else if (menuChoice == 4) {
-                newAccountMenu(userInput, thisCustomer, myBank, myAccount);
+                break;
             } else if (menuChoice == 5) {
                 transactionMenu(userInput, thisCustomer, myBank, myRunner, myAccount);
             } else if (menuChoice == 0) {
-                myRunner.mainMenu(myBank, thisCustomer, myRunner, myAccount);
+                break;
             }
         }
     }
-
-//    public double getTotalinDeposits() {
-//
-//    }
 }

@@ -1,0 +1,6 @@
+account.name= dgc1
+account.balance= 50.0
+account.type=1
+account.name= dgc2
+account.balance= 50.0
+account.type=1

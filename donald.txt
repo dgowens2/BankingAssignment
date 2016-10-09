@@ -1,9 +1,0 @@
-account.name=  dgc1
-account.balance= 50.0
-account.type=1
-account.name=  dgs2
-account.balance= 44.32366331367189
-account.type=2
-account.name=  dgr3
-account.balance= 24.200000000000003
-account.type=3

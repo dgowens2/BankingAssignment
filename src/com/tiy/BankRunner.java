@@ -11,10 +11,9 @@ import java.util.Scanner;
  */
 public class BankRunner {
     public static void main(String[] args) {
-        Bank myBank = new Bank();
         BankRunner myRunner = new BankRunner();
 
-        myRunner.readBank(myBank.customerList);
+        Bank myBank = new Bank();
 
         System.out.println("Welcome to " + myBank.bankName);
 
@@ -30,11 +29,19 @@ public class BankRunner {
 
         myBank.customerList.add(myCustomer);
 
-        System.out.println("Hello, " + myCustomer.getUserName() + " how may we help you today?");
-
         BankAccount myAccount = new BankAccount();
 
+        myRunner.readBank(myBank.customerList, userName, myBank, myRunner, myAccount, myCustomer);
+
+        System.out.println("Hello, " + myCustomer.getUserName() + " how may we help you today?");
+
+        System.out.println(myCustomer.getUserName() + " " + myAccount.accountName);
+
         myRunner.mainMenu(myBank, myCustomer, myRunner, myAccount);
+    }
+
+    public void getUserName (){
+
     }
 
     public void mainMenu(Bank myBank, Customer myCustomer, BankRunner myRunner, BankAccount myAccount) {
@@ -55,7 +62,8 @@ public class BankRunner {
                 if (myCustomer.customerAccounts.isEmpty()){
                     System.out.println("We don't have an account for you yet.\n");
                     myBank.newAccountMenu(userInput, myCustomer, myBank, myAccount);
-                } else {
+                }
+                else {
                     myBank.transactionMenu(userInput, myCustomer, myBank, myRunner, myAccount);
                 }
             } else if (mainMenuChoice == 4) {
@@ -65,7 +73,7 @@ public class BankRunner {
                 break;
             } else {
                 System.out.println("Invalid selection. Please try again.");
-                mainMenu(myBank, myCustomer, myRunner, myAccount);
+                break;
             }
         }
     }
@@ -88,8 +96,9 @@ public class BankRunner {
                         System.out.println(customers.getUserName() + " " + bankAccounts.getAccountName() + " " + bankAccounts.getBalance());
                     }
                 }
+            } else if (mainMenuChoice == 0) {
+                break;
             }
-
         }
     }
 
@@ -130,7 +139,7 @@ public class BankRunner {
         }
     }
 
-    public void readBank(ArrayList<Customer> customerList) {
+    public void readBank(ArrayList<Customer> customerList, String userName, Bank myBank, BankRunner myRunner, BankAccount myBankAccount, Customer myCustomer) {
         try {
             ArrayList<BankAccount> customerAccounts;
             File bankFile = new File("bank.txt");
@@ -139,34 +148,40 @@ public class BankRunner {
                 String nextLine = fileScanner.nextLine();
                 String[] thisName = nextLine.split(",");
                 for (String currentName : thisName) {
-                    Customer myCustomer = new Customer(currentName);
-                    customerAccounts = new ArrayList<>();
-                    customerList.add(myCustomer);
-                    System.out.println(customerList);
-                    File accountFile = new File(currentName + ".txt");
-                    Scanner accountScanner = new Scanner(accountFile);
-                    while(accountScanner.hasNext()) {
-                        String accountName = accountScanner.nextLine().split("=")[1];
-                        double balance = Double.valueOf(accountScanner.nextLine().split("=")[1]);
-                        int type = Integer.valueOf(accountScanner.nextLine().split("=")[1]);
-                        if (type == 1) {
-                            customerAccounts.add(new CheckingAccount(accountName, balance, 1));
-                            System.out.println("Checking account information received");
-                        } else if (type == 2) {
-                            customerAccounts.add(new SavingsAccount(accountName, balance, 2));
-                            System.out.println("Savings account information received");
-                        } else if (type == 3) {
-                            customerAccounts.add(new RetirementAccount(accountName, balance, 3));
-                            System.out.println("Retirement account information received");
+                    if (currentName.equals(userName)) {
+                        myCustomer = new Customer(userName);
+                        customerAccounts = new ArrayList<>();
+                        File accountFile = new File(currentName + ".txt");
+                        Scanner accountScanner = new Scanner(accountFile);
+                        while (accountScanner.hasNext()) {
+                            String accountName = accountScanner.nextLine().split("=")[1];
+                            double balance = Double.valueOf(accountScanner.nextLine().split("=")[1]);
+                            int type = Integer.valueOf(accountScanner.nextLine().split("=")[1]);
+                            if (type == 1) {
+                                myCustomer.customerAccounts.add(new CheckingAccount(accountName, balance, 1));
+                                System.out.println("Checking account information received");
+                                System.out.println(accountName + " " + balance + " " + type);
+                            } else if (type == 2) {
+                                myCustomer.customerAccounts.add(new SavingsAccount(accountName, balance, 2));
+                                System.out.println("Savings account information received");
+                            } else if (type == 3) {
+                                myCustomer.customerAccounts.add(new RetirementAccount(accountName, balance, 3));
+                                System.out.println("Retirement account information received");
+                            }
+                            System.out.println("Customer information received for " + currentName);
                         }
-                        System.out.println("Customer information received for " + currentName);
+                        myBank.customerList.add(myCustomer);
                     }
-                    myCustomer.setCustomerAccounts(customerAccounts);
                 }
             }
         } catch (IOException exception){
             System.out.println("No Files in System");
         }
+
+        System.out.println("Hello, " + myCustomer.getUserName() + " how may we help you today?");
+
+        myRunner.mainMenu(myBank, myCustomer, myRunner, myBankAccount);
+
     }
 
     public static boolean runInterestThread = true;
