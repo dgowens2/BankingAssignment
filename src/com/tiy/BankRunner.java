@@ -15,7 +15,16 @@ public class BankRunner {
 
         Bank myBank = new Bank();
 
+        Customer myCustomer = new Customer();
+
+        BankAccount myAccount = new BankAccount();
+
         System.out.println("Welcome to " + myBank.bankName);
+
+        myRunner.getUserName(myRunner, myBank, myCustomer, myAccount);
+    }
+
+    public void getUserName (BankRunner myRunner, Bank myBank, Customer myCustomer, BankAccount myAccount){
 
         System.out.println("What is your name?");
 
@@ -23,25 +32,15 @@ public class BankRunner {
 
         String userName = userInput.nextLine();
 
-        Customer myCustomer = new Customer();
-
         myCustomer.setUserName(userName);
 
         myBank.customerList.add(myCustomer);
-
-        BankAccount myAccount = new BankAccount();
 
         myRunner.readBank(myBank.customerList, userName, myBank, myRunner, myAccount, myCustomer);
 
         System.out.println("Hello, " + myCustomer.getUserName() + " how may we help you today?");
 
-        System.out.println(myCustomer.getUserName() + " " + myAccount.accountName);
-
         myRunner.mainMenu(myBank, myCustomer, myRunner, myAccount);
-    }
-
-    public void getUserName (){
-
     }
 
     public void mainMenu(Bank myBank, Customer myCustomer, BankRunner myRunner, BankAccount myAccount) {
@@ -159,21 +158,17 @@ public class BankRunner {
                             int type = Integer.valueOf(accountScanner.nextLine().split("=")[1]);
                             if (type == 1) {
                                 myCustomer.customerAccounts.add(new CheckingAccount(accountName, balance, 1));
-                                System.out.println("Checking account information received");
-                                System.out.println(accountName + " " + balance + " " + type);
                             } else if (type == 2) {
                                 myCustomer.customerAccounts.add(new SavingsAccount(accountName, balance, 2));
-                                System.out.println("Savings account information received");
                             } else if (type == 3) {
                                 myCustomer.customerAccounts.add(new RetirementAccount(accountName, balance, 3));
-                                System.out.println("Retirement account information received");
                             }
-                            System.out.println("Customer information received for " + currentName);
                         }
                         myBank.customerList.add(myCustomer);
                     }
                 }
             }
+            System.out.println("Customer information received for " + userName);
         } catch (IOException exception){
             System.out.println("No Files in System");
         }
@@ -181,7 +176,6 @@ public class BankRunner {
         System.out.println("Hello, " + myCustomer.getUserName() + " how may we help you today?");
 
         myRunner.mainMenu(myBank, myCustomer, myRunner, myBankAccount);
-
     }
 
     public static boolean runInterestThread = true;

@@ -1,0 +1,6 @@
+account.name=     agc1
+account.balance= 60.0
+account.type=1
+account.name=     agc2
+account.balance= 40.0
+account.type=1

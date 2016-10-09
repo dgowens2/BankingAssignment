@@ -1,0 +1,3 @@
+account.name= danac1
+account.balance= 100.0
+account.type=1
